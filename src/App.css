@@ -1,33 +1,168 @@
 .App {
   text-align: center;
+  width: 90%;
+  height: 90%;
+  position: relative;
+  top: 20px;
+  margin: 0 auto;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.2);
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.SearchBox { 
+  position: relative; 
+  margin: 2px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.SearchBox input {
+   text-indent: 45px;
+   width: 100%;
+   height: 45px;
+   font-size: 1.2em;
+   border: 1px solid #D0CFCE;
+   border-radius: 5px;
+   outline: none;
+}
+
+.SearchBox .fa-search { 
+  position: absolute;
+  top: 5px;
+  left: 7px;
+  font-size: 15px;
+  width: 35px;
+  height: 35px;
+  color: #D0CFCE;
+}
+
+.SearchBar {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #EEEEEE;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+}
+
+.SearchBar__heading {
+  flex: 1;
+}
+
+.SearchBar__controls {
+  flex: 2;
+}
+
+.FilterOptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 0.9em;
+  margin: 2px;
+}
+
+.FilterOptions__option input{
+  margin-right: 10px;
+}
+
+.FilterOptions__option label {
+  color: #7D7D7D;
+}
+
+.ListItem {
+  box-shadow: 0 0 1px 0 rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.ListItem__icon {
+  flex: 1;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.ListItem__circle {
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0,0,0,0.3);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ListItem__content {
+  flex: 5;
+  padding: 2px;
+}
+
+.ListItem__heading {
+  display: flex;
+}
+
+.ListItem__title {
+  flex: 4;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: left;
+}
+
+.ListItem__size {
+  flex: 1;
+  font-size: 0.9em;
+  color: rgba(0,0,0,0.4);
+  text-align: right;
+}
+
+.ListItem__actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ListItem__status {
+  flex: 1;
+  font-size: 0.9em;
+  color: lightblue;
+  text-align: left;
+}
+
+.ControlBar {
+  display: flex;
+  flex-direction: row;
+  border: solid 1px rgba(0,0,0,0.1);
+  width: 90px;
+  justify-content: space-between;
+  border-radius: 3px;
+  margin: 2px;
+  color: #7D7D7D;
+}
+
+.ControlBar__btn {
+  flex: 1;
+  padding: 2px;
+}
+
+.ControlBar__btn:last-child {
+  border-left: solid 1px rgba(0,0,0,0.1);
+}
+
+.ControlBar__btn:first-child {
+  border-right: solid 1px rgba(0,0,0,0.1);
+}
+
+.ControlBar__btn:hover, .ControlBar__btn:focus {
+  color: #212529;
+  text-decoration: none;
+}
+
+.ControlBar__btn:focus, .ControlBar__btn.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.ControlBar__btn.disabled, .ControlBar__btn:disabled {
+  opacity: 0.65;
+}
+
+.ControlBar__btn:not(:disabled):not(.disabled) {
+  cursor: pointer;
 }
