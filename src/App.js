@@ -11,14 +11,33 @@ import {
 import { faRedoAlt, faTrashAlt, faCloudDownloadAlt } from '@fortawesome/free-solid-svg-icons';
 
 class App extends Component {
+  state = {
+    searchTerm: '',
+    filterOption: 'All'
+  }
 
+  handleUpdate = (update) => {
+    this.setState({ filterOption: update })
+  }
+
+  handleSearch = (searchTerm) => {
+    this.setState({ searchTerm: searchTerm})
+  }
 
   render() {
+
     return (
       <div className="App">
-        <Searchbar />
+        <Searchbar 
+          searchTerm={this.state.searchTerm}
+          filterOption={this.state.filterOption}
+          handleUpdate={this.handleUpdate}
+          handleSearch={this.handleSearch}
+        />
         <FilterableList
           files={this.props.files}
+          searchTerm={this.state.searchTerm}
+          filterOption={this.state.filterOption}
         />
       </div>
     );
@@ -33,9 +52,35 @@ class Searchbar extends Component {
           <h1>File Uploader</h1>
         </div>
         <div className='SearchBar_controls'>
-          <SearchBox />
-          <FilterOptions />
+          <SearchBox 
+            searchTerm={this.props.searchTerm}
+            handleSearch={this.props.handleSearch}
+          />
+          <FilterOptions
+            filterOption={this.props.filterOption}
+            handleUpdate={this.props.handleUpdate}
+          />
         </div>
+      </div>
+    );
+  }
+};
+
+class SearchBox extends Component {
+  handleSearch = (e) => {
+    this.handleSubmit(e.target.value)
+  }
+
+  handleSubmit = (searchTerm) => {
+    console.log('Submit search for ',searchTerm)
+    this.props.handleSearch(searchTerm)
+  }
+  
+  render() {
+    return (
+      <div className='SearchBox'>
+        <FontAwesomeIcon icon={faSearch} />
+        <input type='text' placeholder='Search term' value={this.props.searchTerm} onChange={this.handleSearch} />
       </div>
     );
   }
@@ -43,13 +88,16 @@ class Searchbar extends Component {
 
 class FilterableList extends Component {
   render() {
-
-    const list = this.props.files.map((file, key) => 
+    const { searchTerm, filterOption } = this.props
+    const list = this.props.files.filter(file => 
+      file.name.includes(searchTerm) && 
+      (filterOption === 'All' || file.status === filterOption))
+      .map((file, key) => 
       <ListItem 
         {...file}
         key={key}
       />
-    )
+    );
 
     return (
       <div className='FilterableList'>
@@ -119,42 +167,41 @@ class ControlBar extends Component {
   }
 }
 
-class SearchBox extends Component {
-  render() {
-    return (
-      <div className='SearchBox'>
-        <FontAwesomeIcon icon={faSearch} />
-        <input placeholder='Search term' />
-      </div>
-    );
-  }
-};
-
 class FilterOptions extends Component {
+
+  handleFilterSelect = (e) => {
+    this.updateFilter(e.target.value)
+  }
+
+  updateFilter = (value) => (
+    this.props.handleUpdate(value)
+  )
+  
   render() {
+
     return (
       <div className='FilterOptions'>
         <div className="FilterOptions__option">
           <label htmlFor="filter_all">
-            <input type="radio" value="All" id="filter_all" name="filter"/>
+            <input type="radio" value="All" id="filter_all" name="filter" defaultChecked={this.props.filterOption === 'All'} onChange={this.handleFilterSelect} />
           All 
           </label>
         </div>
         <div className="FilterOptions__option">
           <label htmlFor="filter_uploaded">
-            <input type="radio" value="Uploaded" id="filter_uploaded" name="filter"/>
+            <input type="radio" value="Uploaded" id="filter_uploaded" name="filter" defaultChecked={this.props.filterOption === 'Uploaded'} onChange={this.handleFilterSelect} />
           Uploaded
           </label>
         </div>
         <div className="FilterOptions__option">  
           <label htmlFor="filter_synced">
-            <input type="radio" value="Synced" id="filter_synced" name="filter"/>
+            <input type="radio" value="Synced" id="filter_synced" name="filter" defaultChecked={this.props.filterOption === 'Synced'} onChange={this.handleFilterSelect} />
           Synced
           </label>
         </div>
         <div className="FilterOptions__option">  
           <label htmlFor="filter_new">
-            <input type="radio" value="New" id="filter_new" name="filter"/>
+            <input type="radio" value="New" id="filter_new" name="filter" defaultChecked={this.props.filterOption === 'New'} onChange={this.handleFilterSelect} />
           New
           </label>
         </div>
